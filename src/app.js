@@ -9,9 +9,11 @@ import { messageModel } from './dao/mongo/models/messages.model.js';
 import passport from 'passport';
 import initializePassport from './config/passport.config.js';
 import config from './config/config.js';
-import roles from './config/roles.config.js';
 import { addLoggerDev } from './utils/loggers/logger.development.js';
 import { addLoggerProd } from './utils/loggers/logger.production.js';
+import swaggerJSDoc from 'swagger-jsdoc';
+import swaggerUiExpress from 'swagger-ui-express';
+
 
 import router from './routes/index.js';
 import views from './routes/views.router.js';
@@ -55,10 +57,25 @@ initializePassport();
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Swagger
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.1",
+        info: {
+            title: "Documentación Ecommerce",
+            description: "La documentación de los endpoints"
+        },
+    },
+    apis: [`${__dirname}/docs/**/*.yaml`],
+};
+const specs = swaggerJSDoc(swaggerOptions);
+app.use ("/docs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
+
 //Rutas
 app.use("/api", router);
 app.use("/", views);
 
+//Sockets
 io.on('connection', async (socket) => {
     console.log("Nuevo cliente conectado");
 

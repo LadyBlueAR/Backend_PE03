@@ -101,7 +101,7 @@ export default class ProductsController {
         try {
             const result = await ps.deleteProduct(pid);
             req.logger.info("Producto Eliminado");
-            res.json({ message: 'Producto Eliminado', payload: result });
+            res.status(204).json({ message: 'Producto Eliminado', payload: result });
         } catch (error) {
             req.logger.error("Error al eliminar el producto");
             res.status(500).json({ error: `Error al eliminar el producto: ${error.message}` });

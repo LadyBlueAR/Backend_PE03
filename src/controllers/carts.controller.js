@@ -72,7 +72,7 @@ export default class CartsController {
     const { cid } = req.params;
     try {
       const updatedCart = await cs.deleteCart(cid);
-      res.status(200).json({ message: 'Todos los productos del carrito han sido eliminados', payload: updatedCart });
+      res.status(204).json({ message: 'Todos los productos del carrito han sido eliminados', payload: updatedCart });
     } catch (error) {
       res.status(500).json({ error: `Error al eliminar los productos del carrito: ${error.message}` });
     }
