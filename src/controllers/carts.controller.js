@@ -10,7 +10,7 @@ export default class CartsController {
   static async getAllCarts(req, res) {
     try {
       const carts = await cs.getAllCarts();
-      res.json({ message: 'Success', payload: carts });
+      res.status(200).json({ message: 'Success', payload: carts });
     } catch (error) {
       res.status(500).json({ error: `Error al buscar los carritos en la base de datos: ${error.message}` });
     }

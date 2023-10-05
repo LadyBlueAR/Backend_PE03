@@ -62,7 +62,7 @@ export default class ProductsController {
         const { pid } = req.params;
         try {
             const product = await ps.getProductById(pid);
-            res.json({ status: 'success', payload: product });
+            res.status(200).json({ status: 'success', payload: product });
         } catch (error) {
             req.logger.error("Producto no encontrado");
             res.status(404).json({ error: `Producto no encontrado: ${error.message}` });
